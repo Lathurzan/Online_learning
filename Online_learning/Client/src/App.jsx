@@ -15,6 +15,9 @@ import Signup from "./components/signup";
 import TestOptions from "./components/TestOptions";
 import Complaints from "./components/Complaints";
 import AdminPanel from "./admin/components/AdminPanal";
+import AdminUserManage from "./admin/components/AdminUserManage";
+import AdminCourse from "./admin/components/AdminCourse";
+import AdminAnalisys from "./admin/components/AdminAnalisys";
 
 
 function App() {
@@ -38,6 +41,9 @@ function App() {
         <Route path="/testoption" element={<TestOptions />} />
         <Route path="/complaints" element={<Complaints />} />
         <Route path="/adminpanel" element={<AdminPanel />} />
+        <Route path="/adminusermanage" element={<AdminUserManage />} />
+        <Route path="/admincourse" element={<AdminCourse />} /> 
+        <Route path="/adminanalisys" element={<AdminAnalisys />} />
       </Routes>
     </Router>
   );

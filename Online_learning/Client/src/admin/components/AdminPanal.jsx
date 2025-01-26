@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -14,28 +14,27 @@ import {
   TrendingUp,
   Menu,
   X,
-  Shield
-} from 'lucide-react';
+  Shield,
+} from "lucide-react";
 
 // Navbar Component
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const menuItems = [
-    { icon: <LayoutDashboard className="h-5 w-5" />, text: 'Dashboard' },
-    { icon: <Users className="h-5 w-5" />, text: 'Users' },
-    { icon: <BookOpen className="h-5 w-5" />, text: 'Courses' },
-    { icon: <BarChart2 className="h-5 w-5" />, text: 'Analytics' },
-    { icon: <Settings className="h-5 w-5" />, text: 'Settings' }
+    { icon: <LayoutDashboard className="h-5 w-5" />, text: "Dashboard" },
+    { icon: <Users className="h-5 w-5" />, text: "Users" },
+    { icon: <BookOpen className="h-5 w-5" />, text: "Courses" },
+    { icon: <BarChart2 className="h-5 w-5" />, text: "Analytics" },
+    { icon: <Settings className="h-5 w-5" />, text: "Settings" },
   ];
 
   return (
     <nav className="bg-gray-800 text-white fixed w-full z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo and Brand */}
-          <div className="flex-shrink-0 flex items-center">
+        <div className="flex items-center justify-between py-3">
+          <div className="flex items-center">
             <Shield className="h-8 w-8 text-blue-400" />
             <span className="ml-2 text-xl font-bold">Admin Portal</span>
           </div>
@@ -113,25 +112,29 @@ const Navbar = () => {
 
 // Sidebar Component
 const Sidebar = ({ isOpen }) => {
-  const [activeItem, setActiveItem] = useState('Dashboard');
-  
+  const [activeItem, setActiveItem] = useState("Dashboard");
+
   const menuItems = [
-    { icon: <LayoutDashboard size={20} />, title: 'Dashboard' },
-    { icon: <Users size={20} />, title: 'Users' },
-    { icon: <BookOpen size={20} />, title: 'Courses' },
-    { icon: <BarChart2 size={20} />, title: 'Analytics' },
-    { icon: <Settings size={20} />, title: 'Settings' }
+    { icon: <LayoutDashboard size={20} />, title: "Dashboard" },
+    { icon: <Users size={20} />, title: "Users" },
+    { icon: <BookOpen size={20} />, title: "Courses" },
+    { icon: <BarChart2 size={20} />, title: "Analytics" },
+    { icon: <Settings size={20} />, title: "Settings" },
   ];
 
   return (
-    <div className={`h-screen bg-gray-800 text-white w-64 fixed left-0 top-16 transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+    <div
+      className={`h-screen bg-gray-800 text-white w-64 fixed left-0 top-16 transition-transform duration-300 transform ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      } md:translate-x-0`}
+    >
       <div className="p-4">
         {menuItems.map((item) => (
           <button
             key={item.title}
             onClick={() => setActiveItem(item.title)}
             className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${
-              activeItem === item.title ? 'bg-blue-600' : 'hover:bg-gray-700'
+              activeItem === item.title ? "bg-blue-600" : "hover:bg-gray-700"
             }`}
           >
             {item.icon}
@@ -150,13 +153,15 @@ const StatCard = ({ icon, title, value, trend }) => (
       <div>
         <p className="text-gray-500 text-sm">{title}</p>
         <h3 className="text-2xl font-bold mt-2">{value}</h3>
-        <p className={`text-sm mt-2 ${trend >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-          {trend >= 0 ? '↑' : '↓'} {Math.abs(trend)}% from last month
+        <p
+          className={`text-sm mt-2 ${
+            trend >= 0 ? "text-green-500" : "text-red-500"
+          }`}
+        >
+          {trend >= 0 ? "↑" : "↓"} {Math.abs(trend)}% from last month
         </p>
       </div>
-      <div className="bg-blue-100 p-3 rounded-full">
-        {icon}
-      </div>
+      <div className="bg-blue-100 p-3 rounded-full">{icon}</div>
     </div>
   </div>
 );
@@ -167,9 +172,9 @@ const RecentActivity = () => (
     <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
     <div className="space-y-4">
       {[
-        { user: 'John Doe', action: 'enrolled in React Course', time: '2 hours ago' },
-        { user: 'Jane Smith', action: 'completed Python Basics', time: '3 hours ago' },
-        { user: 'Mike Johnson', action: 'started JavaScript Course', time: '5 hours ago' }
+        { user: "John Doe", action: "enrolled in React Course", time: "2 hours ago" },
+        { user: "Jane Smith", action: "completed Python Basics", time: "3 hours ago" },
+        { user: "Mike Johnson", action: "started JavaScript Course", time: "5 hours ago" },
       ].map((activity, index) => (
         <div key={index} className="flex items-center justify-between border-b pb-2">
           <div>
@@ -183,6 +188,7 @@ const RecentActivity = () => (
   </div>
 );
 
+// Admin Panel Component
 function AdminPanel() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -190,30 +196,30 @@ function AdminPanel() {
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <Sidebar isOpen={sidebarOpen} />
-      
+
       {/* Main Content */}
       <div className="md:ml-64 pt-16 p-6">
         {/* Dashboard Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <StatCard 
+          <StatCard
             icon={<Users className="text-blue-600" size={24} />}
             title="Total Users"
             value="1,234"
             trend={12}
           />
-          <StatCard 
+          <StatCard
             icon={<BookOpenCheck className="text-blue-600" size={24} />}
             title="Active Courses"
             value="45"
             trend={8}
           />
-          <StatCard 
+          <StatCard
             icon={<DollarSign className="text-blue-600" size={24} />}
             title="Revenue"
             value="$12,345"
             trend={-5}
           />
-          <StatCard 
+          <StatCard
             icon={<TrendingUp className="text-blue-600" size={24} />}
             title="User Growth"
             value="23%"
@@ -223,14 +229,13 @@ function AdminPanel() {
 
         {/* Dashboard Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Course Overview */}
           <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-lg font-semibold mb-4">Course Overview</h2>
             <div className="space-y-4">
               {[
-                { name: 'React Fundamentals', students: 234, progress: 75 },
-                { name: 'Python for Beginners', students: 189, progress: 60 },
-                { name: 'JavaScript Advanced', students: 156, progress: 45 }
+                { name: "React Fundamentals", students: 234, progress: 75 },
+                { name: "Python for Beginners", students: 189, progress: 60 },
+                { name: "JavaScript Advanced", students: 156, progress: 45 },
               ].map((course, index) => (
                 <div key={index} className="space-y-2">
                   <div className="flex justify-between">
@@ -248,7 +253,6 @@ function AdminPanel() {
             </div>
           </div>
 
-          {/* Recent Activity */}
           <div className="lg:col-span-1">
             <RecentActivity />
           </div>
