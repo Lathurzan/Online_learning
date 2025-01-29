@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Define routes
 app.use('/api/admin', require('./routes/adminAuth'));
+app.use('/api/user', require('./routes/userAuth')); // Add this line
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -29,7 +30,8 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+// Start server
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
