@@ -1,30 +1,16 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  name: { // You can adjust fields as per your requirements
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-    trim: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-}, {
-  collection: 'users' // Explicitly name the collection
-});
+  firstName: { type: String, required: true, trim: true },
+  sureName: { type: String, required: true, trim: true },
+  age: { type: Number, required: true },
+  gender: { type: String, required: true, enum: ['Male', 'Female', 'Other'] },
+  district: { type: String, required: true, trim: true },
+  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+  username: { type: String, required: true, unique: true, trim: true },
+  password: { type: String, required: true },
+  rememberMe: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+}, { collection: 'users' });
 
-// Use a consistent model name
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);

@@ -1,43 +1,32 @@
 const express = require('express');
-const connectDB = require('./config/db');
 const cors = require('cors');
-const path = require('path');
+const connectDB = require('./config/db');
 
 const app = express();
 
 // Connect to MongoDB
 connectDB();
 
-// CORS middleware
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
-}));
-
-// Body parser middleware
+// Middleware
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Define routes
+// Routes
+app.use('/api/user', require('./routes/userAuth'));
 app.use('/api/admin', require('./routes/adminAuth'));
-app.use('/api/user', require('./routes/userAuth')); // Add this line
 
-// Error handling middleware
+// Global Error Handling Middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.status(500).json({ message: 'Something went wrong', error: err.message });
 });
 
 const PORT = process.env.PORT || 5000;
-
-// Start server
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const server = app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
-  console.log(`Error: ${err.message}`);
-  // Close server & exit process
+  console.error(`❌ Error: ${err.message}`);
   server.close(() => process.exit(1));
 });
