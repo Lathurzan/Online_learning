@@ -1,181 +1,172 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
-    firstName: '',
-    sureName: '',
-    age: '',
-    gender: '',
-    district: '',
-    email: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
+    firstName: "",
+    sureName: "",
+    age: "",
+    gender: "",
+    district: "",
+    email: "",
+    username: "",
+    password: "",
     rememberMe: false,
   });
+  const [message, setMessage] = useState("");
 
-  const [error, setError] = useState('');
+  useEffect(() => {
+    if (location.state?.openLogin) {
+      setMessage("Redirected to login...");
+    }
+  }, [location.state]);
 
+  const handleSignInClick = () => {
+    navigate("/", { state: { openLogin: true } });
+  };
+
+  // Handle input change
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { password, confirmPassword, age } = formData;
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/user/register",
+        formData
+      );
+      setMessage(response.data.message);
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
+      // Redirect to Home and open login modal
+      setTimeout(() => {
+        navigate("/", { state: { openLogin: true } });
+      }, 2000);
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Something went wrong!");
     }
-
-    if (age <= 0) {
-      setError('Age must be a positive number');
-      return;
-    }
-
-    setError('');
-    console.log('Form Data Submitted:', formData);
-    // Perform signup logic here
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-green-100">
-      <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
-        <h2 className="text-2xl font-bold text-center text-blue-700 mb-6">Signup</h2>
-        <form onSubmit={handleSubmit}>
-          {/* First Name and Sure Name aligned horizontally */}
-          <div className="flex space-x-4 mb-4">
-            <div className="w-1/2">
-              <label className="block text-sm font-medium text-gray-600">First Name:</label>
-              <input
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-            <div className="w-1/2">
-              <label className="block text-sm font-medium text-gray-600">Sure Name:</label>
-              <input
-                type="text"
-                name="sureName"
-                value={formData.sureName}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Age:</label>
-            <input
-              type="number"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              required
-              min="1" // Ensures only positive numbers
-              className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Gender:</label>
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            >
-              <option value="" disabled>Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">District:</label>
+    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-500 to-green-500">
+      <div className="max-w-md w-full bg-white p-6 shadow-lg rounded-lg">
+        <h2 className="text-3xl font-bold text-blue-600 mb-4 text-center">
+          Signup
+        </h2>
+        {message && (
+          <p className="text-green-600 text-center font-semibold">{message}</p>
+        )}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
             <input
               type="text"
-              name="district"
-              value={formData.district}
+              name="firstName"
+              placeholder="First Name"
+              value={formData.firstName}
               onChange={handleChange}
+              className="p-2 border rounded"
               required
-              className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Username:</label>
             <input
               type="text"
-              name="username"
-              value={formData.username}
+              name="sureName"
+              placeholder="Sure Name"
+              value={formData.sureName}
               onChange={handleChange}
+              className="p-2 border rounded"
               required
-              className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Confirm Password:</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-          {/* Remember Me checkbox */}
-          <div className="mb-4 flex items-center">
+          <input
+            type="number"
+            name="age"
+            placeholder="Age"
+            value={formData.age}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+          />
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+          >
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <input
+            type="text"
+            name="district"
+            placeholder="District"
+            value={formData.district}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+          />
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={formData.username}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+          />
+          <label className="flex items-center space-x-2">
             <input
               type="checkbox"
               name="rememberMe"
               checked={formData.rememberMe}
               onChange={handleChange}
-              className="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring-blue-400"
             />
-            <label className="ml-2 text-sm font-medium text-gray-600">Remember Me</label>
-          </div>
-          {error && <p className="mb-4 text-sm text-red-600">{error}</p>}
+            <span className="text-gray-700">Remember Me</span>
+          </label>
           <button
             type="submit"
-            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-3 text-white bg-blue-600 rounded-md hover:bg-green-600 transition duration-300"
           >
             Signup
           </button>
         </form>
-        <p className="mt-4 text-sm text-center text-gray-600">
-          Already have an account? <a href="/signin" className="text-blue-500 hover:underline">Sign in</a>
+        <p className="text-center mt-4">
+          Already have an account?{" "}
+          <span
+            className="text-blue-500 cursor-pointer hover:underline"
+            onClick={handleSignInClick}
+          >
+            Sign in
+          </span>
         </p>
       </div>
     </div>

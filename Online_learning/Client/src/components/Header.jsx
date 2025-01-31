@@ -1,13 +1,20 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from React Router
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import home_button from "../assets/home-button.png";
 import { FaBars } from "react-icons/fa";
 import SignIn from "./SignIn"; // Import SignIn component
 
 function Header() {
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.openLogin) {
+      setIsModalOpen(true);
+    }
+  }, [location.state]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -153,8 +160,8 @@ function Header() {
         ></div>
       )}
 
-      {/* Modal */}
-      {isModalOpen && <SignIn onClose={toggleModal} />}
+      {/* Sign In Modal */}
+      {isModalOpen && <SignIn onClose={() => setIsModalOpen(false)} />}
     </header>
   );
 }
