@@ -22,16 +22,13 @@ const BottomNavigationBar = () => {
     {
       title: "Google Map Location",
       content: (
-        <div className="w-full h-48">
+        <div className="flex justify-center">
           <iframe
-            title="Google Map Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3146.2143936359354!2d80.21700011478193!3d6.030524695609295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae172bfa8c8ab63%3A0xe33eb9351e78b8fc!2sMatara%20Fort%20Gate!5e0!3m2!1sen!2slk!4v1700000000000!5m2!1sen!2slk"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
+            src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d3936.2323882934566!2d80.40580877478544!3d9.400993190675976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x3afe94d85ab776b9%3A0xf863f2c1147c9bd2!2sCC25%2B99R%20Rasiah%20Medical%20Stotes%2C%20Kilinochchi!3m2!1d9.4009515!2d80.4083868!5e0!3m2!1sen!2slk!4v1738426072562!5m2!1sen!2slk"
+            className="w-full h-48 md:h-64 rounded-lg border-0"
+            allowFullScreen=""
             loading="lazy"
-            className="transition-transform duration-500 hover:scale-105 rounded-lg"
+            referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>
       ),

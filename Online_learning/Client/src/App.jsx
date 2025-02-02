@@ -18,6 +18,9 @@ import AdminPanel from "./admin/components/AdminPanal";
 import AdminUserManage from "./admin/components/AdminUserManage";
 import AdminCourse from "./admin/components/AdminCourse";
 import AdminAnalisys from "./admin/components/AdminAnalisys";
+import Profile from "./components/Profile";
+import ScoreCalculator from "./components/ScoreCalculator";
+import ResultsTimeline from "./components/ResultsTimeline";
 
 
 function App() {
@@ -44,6 +47,9 @@ function App() {
         <Route path="/adminusermanage" element={<AdminUserManage />} />
         <Route path="/admincourse" element={<AdminCourse />} /> 
         <Route path="/adminanalisys" element={<AdminAnalisys />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/scorecalculator" element={<ScoreCalculator />} />
+        <Route path="/resultstimeline" element={<ResultsTimeline />} />
       </Routes>
     </Router>
   );

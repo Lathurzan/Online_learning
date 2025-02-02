@@ -1,91 +1,110 @@
 import React, { useState } from "react";
-import axios from "axios";
-import "tailwindcss/tailwind.css";
+import { useNavigate, Link } from "react-router-dom";
 
-const SignIn = ({ onClose, onSignIn }) => {
-  const [username, setUsername] = useState("");
+function SignIn({ onClose }) {
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSignIn = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(""); // reset previous error
+
     try {
-      const response = await axios.post("http://localhost:5000/api/signin", {
-        username,
-        password,
+      const response = await fetch("http://localhost:5000/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identifier, password }),
       });
 
-      if (response.data.success) {
-        onSignIn(response.data.user); // Pass user data to parent component
-        onClose(); // Close modal after successful login
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("token", data.token); // Save token to localStorage
+        onClose(); // Close the login form
+        navigate("/"); // Redirect to home page
       } else {
-        setError(response.data.message); // Show error if login fails
+        setError(data.message || "Invalid credentials. Please try again.");
       }
     } catch (err) {
-      setError("Login failed. Please try again.");
+      setError("Server error. Please try again later.");
     }
   };
 
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-8 rounded-lg shadow-lg relative w-96">
-        <button onClick={onClose} className="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
-          ✖
-        </button>
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Sign In</h2>
-        
-        {error && <p className="text-red-500 text-center">{error}</p>}
+  // Base styles for inputs
+  const inputBase =
+    "w-full p-3 rounded-md border focus:outline-none focus:ring-2 transition-colors text-gray-800";
+  const errorClass = "border-red-500 focus:ring-red-300";
+  const normalClass = "border-gray-300 focus:ring-purple-300";
 
-        <form className="space-y-4">
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none text-black"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none text-black"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="remember"
-              className="mr-2"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-            />
-            <label htmlFor="remember" className="text-sm text-gray-600">
-              Remember me
-            </label>
-          </div>
-          <button type="button" onClick={handleSignIn} className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700">
-            Sign In
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-70 z-50">
+      <div className="relative bg-white rounded-lg shadow-2xl w-full max-w-md overflow-hidden">
+        {/* Header with gradient */}
+        <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-4">
+          <h2 className="text-gray-900 text-center text-2xl font-bold">
+            Welcome Back!
+          </h2>
+        </div>
+        <div className="p-8">
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl"
+          >
+            &times;
           </button>
-        </form>
-        <p className="mt-4 text-sm text-center text-gray-600">
-          Don&apos;t have an account?{" "}
-          <a href="/signup" className="text-indigo-600 hover:underline">
-            Register here
-          </a>
-        </p>
+          {/* Error Message */}
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 text-red-600 text-center rounded">
+              {error}
+            </div>
+          )}
+          <form onSubmit={handleSubmit}>
+            <div className="mb-5">
+              <input
+                type="text"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                placeholder="Enter your email or username"
+                className={`${inputBase} ${error ? errorClass : normalClass}`}
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                className={`${inputBase} ${error ? errorClass : normalClass}`}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-md hover:from-purple-600 hover:to-pink-600 transition-colors"
+            >
+              Sign In
+            </button>
+          </form>
+          <p className="mt-6 text-center text-gray-600">
+            Don't have an account?{" "}
+            <Link
+              to="/signup"
+              onClick={onClose}
+              className="text-purple-600 hover:underline font-medium"
+            >
+              Sign Up
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default SignIn;
