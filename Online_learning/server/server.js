@@ -19,6 +19,13 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/user', require('./routes/userAuth'));
 app.use('/api/admin', require('./routes/adminAuth'));
+// Mount the stats route
+app.use('/api', require('./routes/stats'));
+
+// Routes
+app.use('/api/trainers', require('./routes/trainers')); // ✅ Ensure this is correct
+
+
 
 // Global Error Handling Middleware
 app.use((err, req, res, next) => {

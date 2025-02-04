@@ -1,3 +1,4 @@
+// AdminPanel.jsx
 import React, { useState } from "react";
 import {
   LayoutDashboard,
@@ -9,13 +10,14 @@ import {
   User,
   BarChart2,
   DollarSign,
-  UserPlus,
   BookOpenCheck,
   TrendingUp,
   Menu,
   X,
   Shield,
 } from "lucide-react";
+import RegistrationChart from "./RegistrationChart"; // adjust the path if needed
+import AdminSidebar from "./AdminSidebar"; // adjust the path if needed
 
 // Navbar Component
 const Navbar = () => {
@@ -110,42 +112,6 @@ const Navbar = () => {
   );
 };
 
-// Sidebar Component
-const Sidebar = ({ isOpen }) => {
-  const [activeItem, setActiveItem] = useState("Dashboard");
-
-  const menuItems = [
-    { icon: <LayoutDashboard size={20} />, title: "Dashboard" },
-    { icon: <Users size={20} />, title: "Users" },
-    { icon: <BookOpen size={20} />, title: "Courses" },
-    { icon: <BarChart2 size={20} />, title: "Analytics" },
-    { icon: <Settings size={20} />, title: "Settings" },
-  ];
-
-  return (
-    <div
-      className={`h-screen bg-gray-800 text-white w-64 fixed left-0 top-16 transition-transform duration-300 transform ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      } md:translate-x-0`}
-    >
-      <div className="p-4">
-        {menuItems.map((item) => (
-          <button
-            key={item.title}
-            onClick={() => setActiveItem(item.title)}
-            className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${
-              activeItem === item.title ? "bg-blue-600" : "hover:bg-gray-700"
-            }`}
-          >
-            {item.icon}
-            <span>{item.title}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 // Stat Card Component
 const StatCard = ({ icon, title, value, trend }) => (
   <div className="bg-white p-6 rounded-lg shadow-md">
@@ -190,14 +156,13 @@ const RecentActivity = () => (
 
 // Admin Panel Component
 function AdminPanel() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
-      <Sidebar isOpen={sidebarOpen} />
+      {/* Use the imported AdminSidebar */}
+      <AdminSidebar />
 
-      {/* Main Content */}
+      {/* Main Content (with left margin to accommodate the sidebar) */}
       <div className="md:ml-64 pt-16 p-6">
         {/* Dashboard Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
@@ -253,8 +218,10 @@ function AdminPanel() {
             </div>
           </div>
 
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-6">
             <RecentActivity />
+            {/* Registration Chart */}
+            <RegistrationChart />
           </div>
         </div>
       </div>

@@ -21,6 +21,8 @@ import AdminAnalisys from "./admin/components/AdminAnalisys";
 import Profile from "./components/Profile";
 import ScoreCalculator from "./components/ScoreCalculator";
 import ResultsTimeline from "./components/ResultsTimeline";
+import AdminSetting from "./admin/components/AdminSetting";
+import Library from "./components/Library";
 
 
 function App() {
@@ -50,6 +52,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/scorecalculator" element={<ScoreCalculator />} />
         <Route path="/resultstimeline" element={<ResultsTimeline />} />
+        <Route path="/adminsetting" element={<AdminSetting />} />
+        <Route path="/library" element={<Library />} />
       </Routes>
     </Router>
   );

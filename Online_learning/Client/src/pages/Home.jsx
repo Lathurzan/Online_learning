@@ -4,11 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaCheckCircle, FaBook, FaCalendarAlt, FaChartLine } from "react-icons/fa";
 import Header from "../components/Header.jsx";
 import BottomNav from "../components/BottomNavigationBar.jsx";
-import ResultsTimeline from "./ResultsTimeline";
+import ResultsTimeline  from "../components/ResultsTimeline.jsx";
 import ielts from "../assets/ielts.png";
 import lifeskills from "../assets/lifeskills.png";
 import ukvi from "../assets/ukvi.png";
-import "../style/styles.css";
+
+
 
 const Home = () => {
   const [popupType, setPopupType] = useState(null);
