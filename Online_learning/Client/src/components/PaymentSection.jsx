@@ -51,6 +51,12 @@ export default function PaymentSection() {
         buttonColor="black"
         buttonType="Buy"
       />
+      <div className="flex items-center justify-center mt-4">
+        <button>
+          <link rel="stylesheet" href="/home" />buy
+        </button>
+        </div>
     </div>
+    
   );
 }

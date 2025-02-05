@@ -23,6 +23,8 @@ import ScoreCalculator from "./components/ScoreCalculator";
 import ResultsTimeline from "./components/ResultsTimeline";
 import AdminSetting from "./admin/components/AdminSetting";
 import Library from "./components/Library";
+import PaymentCancel from "./components/PamementCancel";
+import PaymentSuccess from "./components/PaymentSuccess";
 
 
 function App() {
@@ -54,6 +56,8 @@ function App() {
         <Route path="/resultstimeline" element={<ResultsTimeline />} />
         <Route path="/adminsetting" element={<AdminSetting />} />
         <Route path="/library" element={<Library />} />
+        <Route path="/paymentcancel" element={<PaymentCancel />} />
+        <Route path="/paymentsuccess" element={<PaymentSuccess />} />
       </Routes>
     </Router>
   );
