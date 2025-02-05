@@ -36,4 +36,27 @@ router.post('/', async (req, res) => {
   }
 });
 
+
+
+
+// @route   GET /api/trainers/:id
+// @desc    Get a trainer by ID
+router.get('/:id', async (req, res) => {
+  try {
+    // Find trainer by ID
+    const trainer = await Trainer.findById(req.params.id);
+
+    // If trainer is not found, send a 404 response
+    if (!trainer) {
+      return res.status(404).json({ message: 'Trainer not found' });
+    }
+
+    // Respond with the trainer details
+    res.json(trainer);
+  } catch (err) {
+    console.error('❌ Error fetching trainer details:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
