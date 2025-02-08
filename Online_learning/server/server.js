@@ -109,4 +109,35 @@ process.on('unhandledRejection', (err) => {
   server.close(() => process.exit(1));
 });
 
+
+
+
+
+
+app.use(express.json());
+app.use(cors());
+
+app.post('/create-payment-intent', async (req, res) => {
+  const { amount } = req.body;
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: 'usd',
+    });
+
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+// app.listen(5000, () => {
+//   console.log('Server is running on port 5000');
+// });
+
+
+
 module.exports = app;

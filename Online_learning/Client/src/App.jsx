@@ -25,6 +25,7 @@ import AdminSetting from "./admin/components/AdminSetting";
 import Library from "./components/Library";
 import PaymentCancel from "./components/PamementCancel";
 import PaymentSuccess from "./components/PaymentSuccess";
+import PaymentCard from "./components/PaymentCard";
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
         <Route path="/library" element={<Library />} />
         <Route path="/paymentcancel" element={<PaymentCancel />} />
         <Route path="/paymentsuccess" element={<PaymentSuccess />} />
+        <Route path="/paymentcard" element={<PaymentCard />} />
       </Routes>
     </Router>
   );
