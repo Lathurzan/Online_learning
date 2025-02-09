@@ -50,7 +50,7 @@ const Home = () => {
       icon: FaBook,
       title: "Library Membership",
       desc: "Exclusive IELTS library access.",
-      link: "/library",
+      link: "/payment-section",
     },
     {
       icon: FaCalendarAlt,

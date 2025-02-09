@@ -8,8 +8,8 @@ const PaymentCancel = () => {
       <p style={styles.message}>
         Your payment has been cancelled. If this was a mistake, please try again.
       </p>
-      <Link to="/" style={styles.link}>
-        Return to Home
+      <Link to="/payment-section" style={styles.link}>
+        Return to Payment
       </Link>
     </div>
   );

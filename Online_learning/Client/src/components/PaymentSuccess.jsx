@@ -8,8 +8,8 @@ const PaymentSuccess = () => {
       <p style={styles.message}>
         Your payment was processed successfully. Thank you for your purchase!
       </p>
-      <Link to="/" style={styles.link}>
-        Return to Home
+      <Link to="/library" style={styles.link}>
+        Go to the Library
       </Link>
     </div>
   );
